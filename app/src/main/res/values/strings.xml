@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Harmonium Android</string>
+
+    /* Battery Sensor */
+    <string name="power_disconnected">Power source disconnected</string>
+    <string name="running_on_battery">Running on battery</string>
+    <string name="plugged_into_ac">Plugged into AC charger</string>
+    <string name="plugged_into_usb">Plugged into USB charger</string>
+    <string name="plugged_into_wireless">Plugged into wireless charger</string>
+    <string name="unknown_plugged_state">Unknown plugged state</string>
+</resources>
