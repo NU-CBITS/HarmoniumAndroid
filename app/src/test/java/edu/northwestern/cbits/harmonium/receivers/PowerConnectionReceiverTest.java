@@ -17,6 +17,7 @@ import edu.northwestern.cbits.harmonium.models.AppDatabase;
 import edu.northwestern.cbits.harmonium.models.Battery;
 
 import static android.os.Build.VERSION_CODES.KITKAT;
+import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static org.junit.Assert.assertEquals;
 
 /*
@@ -84,6 +85,121 @@ public class PowerConnectionReceiverTest {
 
         waitForDatabaseInsert();
         assertEquals("Power source disconnected", firstBattery().getPowerConnection());
+    }
+
+    @Test
+    public void onReceiveIntent_recordsHealth() throws InterruptedException {
+        final Intent intent = batteryChangedIntent()
+            .putExtra(BatteryManager.EXTRA_HEALTH, BatteryManager.BATTERY_HEALTH_COLD);
+        context().sendStickyBroadcast(intent);
+
+        mReceiver.onReceiveIntent(context(), new Intent(), mAppDatabase);
+
+        waitForDatabaseInsert();
+        assertEquals("Cold", firstBattery().getHealth());
+    }
+
+    @Test
+    @Config (minSdk = LOLLIPOP)
+    public void onReceiveIntent_recordsCapacity() throws InterruptedException {
+        context().sendStickyBroadcast(batteryChangedIntent());
+
+        mReceiver.onReceiveIntent(context(), new Intent(), mAppDatabase);
+
+        waitForDatabaseInsert();
+        assertEquals(Integer.MIN_VALUE, firstBattery().getCapacity());
+    }
+
+    @Test
+    @Config (minSdk = LOLLIPOP)
+    public void onReceiveIntent_recordsChargeCounter() throws InterruptedException {
+        context().sendStickyBroadcast(batteryChangedIntent());
+
+        mReceiver.onReceiveIntent(context(), new Intent(), mAppDatabase);
+
+        waitForDatabaseInsert();
+        assertEquals(Integer.MIN_VALUE, firstBattery().getChargeCounter());
+    }
+
+    @Test
+    @Config (minSdk = LOLLIPOP)
+    public void onReceiveIntent_recordsCurrentAverage() throws InterruptedException {
+        context().sendStickyBroadcast(batteryChangedIntent());
+
+        mReceiver.onReceiveIntent(context(), new Intent(), mAppDatabase);
+
+        waitForDatabaseInsert();
+        assertEquals(Integer.MIN_VALUE, firstBattery().getCurrentAverage());
+    }
+
+    @Test
+    @Config (minSdk = LOLLIPOP)
+    public void onReceiveIntent_recordsCurrentNow() throws InterruptedException {
+        context().sendStickyBroadcast(batteryChangedIntent());
+
+        mReceiver.onReceiveIntent(context(), new Intent(), mAppDatabase);
+
+        waitForDatabaseInsert();
+        assertEquals(Integer.MIN_VALUE, firstBattery().getCurrentNow());
+    }
+
+    @Test
+    @Config (minSdk = LOLLIPOP)
+    public void onReceiveIntent_recordsEnergyCounter() throws InterruptedException {
+        context().sendStickyBroadcast(batteryChangedIntent());
+
+        mReceiver.onReceiveIntent(context(), new Intent(), mAppDatabase);
+
+        waitForDatabaseInsert();
+        assertEquals(Integer.MIN_VALUE, firstBattery().getEnergyCounter());
+    }
+
+    @Test
+    public void onReceiveIntent_recordsTechnology() throws InterruptedException {
+        final Intent intent = batteryChangedIntent()
+            .putExtra(BatteryManager.EXTRA_TECHNOLOGY, "flux capacitor");
+        context().sendStickyBroadcast(intent);
+
+        mReceiver.onReceiveIntent(context(), new Intent(), mAppDatabase);
+
+        waitForDatabaseInsert();
+        assertEquals("flux capacitor", firstBattery().getTechnology());
+    }
+
+    @Test
+    public void onReceiveIntent_recordsTemperature() throws InterruptedException {
+        final Intent intent = batteryChangedIntent()
+            .putExtra(BatteryManager.EXTRA_TEMPERATURE, 7);
+        context().sendStickyBroadcast(intent);
+
+        mReceiver.onReceiveIntent(context(), new Intent(), mAppDatabase);
+
+        waitForDatabaseInsert();
+        assertEquals(7, firstBattery().getTemperature());
+    }
+
+    @Test
+    public void onReceiveIntent_recordsVoltage() throws InterruptedException {
+        final Intent intent = batteryChangedIntent()
+            .putExtra(BatteryManager.EXTRA_VOLTAGE, 64);
+        context().sendStickyBroadcast(intent);
+
+        mReceiver.onReceiveIntent(context(), new Intent(), mAppDatabase);
+
+        waitForDatabaseInsert();
+        assertEquals(64, firstBattery().getVoltage());
+    }
+
+    @Test
+    public void onReceiveIntent_recordsChargingStatus() throws InterruptedException {
+        final Intent intent = batteryChangedIntent()
+            .putExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_FULL);
+        context().sendStickyBroadcast(intent);
+
+        mReceiver.onReceiveIntent(context(), new Intent(), mAppDatabase);
+
+        waitForDatabaseInsert();
+        assertEquals("Full", firstBattery().getChargingStatus());
     }
 
     private Intent batteryChangedIntent() {

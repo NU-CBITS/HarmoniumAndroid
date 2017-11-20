@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "a7456f936052bcd741dee529fe31ce45",
+    "identityHash": "c4b5abb0bbce1974480afacfb7f2ea1a",
     "entities": [
       {
         "tableName": "Battery",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `clientCreatedAt` INTEGER NOT NULL, `chargedPercent` REAL NOT NULL, `powerConnection` TEXT, PRIMARY KEY(`uuid`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `clientCreatedAt` INTEGER NOT NULL, `capacity` INTEGER NOT NULL, `chargeCounter` INTEGER NOT NULL, `chargedPercent` REAL NOT NULL, `chargingStatus` TEXT, `currentAverage` INTEGER NOT NULL, `currentNow` INTEGER NOT NULL, `energyCounter` INTEGER NOT NULL, `health` TEXT, `powerConnection` TEXT, `technology` TEXT, `temperature` INTEGER NOT NULL, `voltage` INTEGER NOT NULL, PRIMARY KEY(`uuid`))",
         "fields": [
           {
             "fieldPath": "uuid",
@@ -21,16 +21,76 @@
             "notNull": true
           },
           {
+            "fieldPath": "capacity",
+            "columnName": "capacity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chargeCounter",
+            "columnName": "chargeCounter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "chargedPercent",
             "columnName": "chargedPercent",
             "affinity": "REAL",
             "notNull": true
           },
           {
+            "fieldPath": "chargingStatus",
+            "columnName": "chargingStatus",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "currentAverage",
+            "columnName": "currentAverage",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currentNow",
+            "columnName": "currentNow",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "energyCounter",
+            "columnName": "energyCounter",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "health",
+            "columnName": "health",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "powerConnection",
             "columnName": "powerConnection",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "technology",
+            "columnName": "technology",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "temperature",
+            "columnName": "temperature",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "voltage",
+            "columnName": "voltage",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -45,7 +105,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a7456f936052bcd741dee529fe31ce45\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c4b5abb0bbce1974480afacfb7f2ea1a\")"
     ]
   }
 }

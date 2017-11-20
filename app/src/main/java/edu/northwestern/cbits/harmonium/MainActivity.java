@@ -29,8 +29,10 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-                ((TextView) findViewById(R.id.powerConnection)).setText(battery.getPowerConnection());
-                ((TextView) findViewById(R.id.chargedPercent)).setText(String.valueOf(battery.getChargedPercent()));
+                ((TextView) findViewById(R.id.powerConnection))
+                    .setText(battery.getPowerConnection());
+                ((TextView) findViewById(R.id.chargedPercent))
+                    .setText(String.valueOf(battery.getChargedPercent()));
             }
         };
 
