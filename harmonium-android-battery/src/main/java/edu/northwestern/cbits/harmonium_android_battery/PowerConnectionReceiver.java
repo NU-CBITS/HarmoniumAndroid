@@ -1,22 +1,23 @@
-package edu.northwestern.cbits.harmonium.receivers;
+package edu.northwestern.cbits.harmonium_android_battery;
 
+import android.content.BroadcastReceiver;
 import android.os.BatteryManager;
 import android.content.Intent;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Build;
 
-import edu.northwestern.cbits.harmonium.R;
-import edu.northwestern.cbits.harmonium.models.AppDatabase;
-import edu.northwestern.cbits.harmonium.models.Battery;
+public class PowerConnectionReceiver extends BroadcastReceiver {
+    public static final String ACTION_BATTERY_RECORDED =
+        "edu.northwestern.cbits.harmonium.ACTION_BATTERY_RECORDED";
+    public static final String BATTERY_KEY = "battery";
 
-public class PowerConnectionReceiver extends Receiver {
     private Context mContext;
     private Intent mChargingIntent;
     private BatteryManager mBatteryManager;
 
     @Override
-    public void onReceiveIntent(Context context, Intent intent, AppDatabase appDatabase) {
+    public void onReceive(Context context, Intent intent) {
         mContext = context.getApplicationContext();
         mChargingIntent = chargingIntent();
 
@@ -39,7 +40,7 @@ public class PowerConnectionReceiver extends Receiver {
         battery.setVoltage(voltage());
         battery.setChargingStatus(chargingStatus());
 
-        insertBatteryReading(appDatabase, battery);
+        broadcastBatteryReading(battery);
     }
 
     private Intent chargingIntent() {
@@ -145,12 +146,10 @@ public class PowerConnectionReceiver extends Receiver {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
-    private void insertBatteryReading(final AppDatabase appDatabase, final Battery battery) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                appDatabase.batteryDao().insert(battery);
-            }
-        }).start();
+    private void broadcastBatteryReading(final Battery battery) {
+        mContext.sendBroadcast(
+            new Intent(ACTION_BATTERY_RECORDED)
+                .putExtra(BATTERY_KEY, battery)
+        );
     }
 }

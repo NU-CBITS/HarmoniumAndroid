@@ -1,13 +1,15 @@
-package edu.northwestern.cbits.harmonium.models;
+package edu.northwestern.cbits.harmonium_android_battery;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import java.util.UUID;
 
 @Entity
-public class Battery {
+public class Battery implements Parcelable {
     @PrimaryKey
     @NonNull
     private String uuid;
@@ -140,5 +142,54 @@ public class Battery {
 
     public void setVoltage(int voltage) {
         this.voltage = voltage;
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Battery createFromParcel(Parcel in) {
+            return new Battery(in);
+        }
+        public Battery[] newArray(int size) {
+            return new Battery[size];
+        }
+    };
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(getUuid());
+        dest.writeLong(getClientCreatedAt());
+        dest.writeInt(getCapacity());
+        dest.writeInt(getChargeCounter());
+        dest.writeFloat(getChargedPercent());
+        dest.writeString(getChargingStatus());
+        dest.writeInt(getCurrentAverage());
+        dest.writeInt(getCurrentNow());
+        dest.writeInt(getEnergyCounter());
+        dest.writeString(getHealth());
+        dest.writeString(getPowerConnection());
+        dest.writeString(getTechnology());
+        dest.writeInt(getTemperature());
+        dest.writeInt(getVoltage());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    private Battery(Parcel in) {
+        setUuid(in.readString());
+        setClientCreatedAt(in.readLong());
+        setCapacity(in.readInt());
+        setChargeCounter(in.readInt());
+        setChargedPercent(in.readFloat());
+        setChargingStatus(in.readString());
+        setCurrentAverage(in.readInt());
+        setCurrentNow(in.readInt());
+        setEnergyCounter(in.readInt());
+        setHealth(in.readString());
+        setPowerConnection(in.readString());
+        setTechnology(in.readString());
+        setTemperature(in.readInt());
+        setVoltage(in.readInt());
     }
 }

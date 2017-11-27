@@ -1,4 +1,4 @@
-package edu.northwestern.cbits.harmonium.models;
+package edu.northwestern.cbits.harmonium_android_battery;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;

@@ -1,8 +1,6 @@
-package edu.northwestern.cbits.harmonium.receivers;
+package edu.northwestern.cbits.harmonium_android_battery;
 
 import android.os.BatteryManager;
-
-import edu.northwestern.cbits.harmonium.R;
 
 class PowerStatus {
     private final int mPluggedState;

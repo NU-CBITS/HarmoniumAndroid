@@ -1,0 +1,20 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="edu.northwestern.cbits.harmonium_android_location">
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <application>
+
+        <receiver android:name="edu.northwestern.cbits.harmonium_android_location.services.LocationUpdateIntentService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="edu.northwestern.cbits.harmonium_android_location.services.LocationUpdateIntentService.ACTION_PROCESS_UPDATES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

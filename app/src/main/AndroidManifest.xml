@@ -19,10 +19,10 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="edu.northwestern.cbits.harmonium.receivers.PowerConnectionReceiver">
+        <receiver android:name=".receivers.SensorDataBroadcastReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED"/>
+                <action android:name="edu.northwestern.cbits.harmonium.ACTION_BATTERY_RECORDED" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
